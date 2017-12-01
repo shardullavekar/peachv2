@@ -29,8 +29,6 @@ import org.json.JSONObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import devsupport.ai.peachpayv2.R;
-
 
 public class PeachPay extends AppCompatActivity {
     private IProviderBinder binder;
