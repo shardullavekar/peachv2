@@ -16,6 +16,8 @@ import peachpay.PeachListener;
 public class MainActivity extends AppCompatActivity {
     PeachListener peachListener;
 
+    Peach peachPay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
             pay.put("amount", amount);
             pay.put("currency", currency);
             pay.put("type", type);
+            pay.put("savecard", Config.PROMPT);
             pay.put("env", env);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         initListener();
-
-        Peach peachPay = new Peach(pay, activity, peachListener);
+        peachPay = new Peach(pay, activity, peachListener);
         IntentFilter filter = new IntentFilter("ai.devsupport.peachpay");
         registerReceiver(peachPay, filter);
         peachPay.start();
@@ -58,5 +60,11 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         };
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(peachPay);
     }
 }

@@ -157,6 +157,33 @@ public class PeachPay extends AppCompatActivity {
         showDialogue("Getting Checkout Id");
     }
 
+    private void getStatus(String resourcepath) {
+        CheckStatus checkStatus = new CheckStatus();
+        Callback callback = new Callback() {
+            @Override
+            public void onResponse(String response) {
+                dismissDialogue();
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    String code = jsonResponse.getJSONObject("result").getString("code");
+                    if (TextUtils.equals(code, Config.PEACH_SUCCESS)) {
+                        if (jsonResponse.has("registrationId")) {
+                            String token = jsonResponse.getString("registrationId");
+                            Config.saveTokens(getApplicationContext(), token);
+                        }
+                    }
+                    fireBroadcast(Config.SUCCESS, response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    fireBroadcast(Config.FAILED, response);
+                }
+
+            }
+        };
+        showDialogue("Fetching Status");
+        checkStatus.post(server_url, resourcepath, type, callback);
+    }
+
     private void configCheckout(String checkoutId) {
         this.checkoutId = checkoutId;
         Set<String> paymentBrands = new LinkedHashSet<>();
@@ -227,7 +254,8 @@ public class PeachPay extends AppCompatActivity {
 
                 if (transaction.getTransactionType() == TransactionType.SYNC) {
                 /* check the result of synchronous transaction */
-                    fireBroadcast(Config.SUCCESS, "checkoutId=" + checkoutId);
+                    getStatus(resourcePath);
+                //fireBroadcast(Config.SUCCESS, "checkoutId=" + checkoutId);
                 } else {
                 /* wait for the asynchronous transaction callback in the onNewIntent() */
                 }

@@ -12,9 +12,9 @@ public class CheckStatus {
     public CheckStatus () {
 
     }
-    public void post(String url, String resourcePath, Callback callback) {
+    public void post(String url, String resourcePath, String type, Callback callback) {
         CheckStatusAsynch checkoutAsynch = new CheckStatusAsynch(callback);
-        checkoutAsynch.execute(new String[]{url, "getPaymentStatus", resourcePath});
+        checkoutAsynch.execute(new String[]{url, "getPaymentStatus", resourcePath, type});
     }
 
     private class CheckStatusAsynch extends AsyncTask<String, Void, String> {
@@ -27,7 +27,7 @@ public class CheckStatus {
             Post post = new Post();
             String checkoutResponse;
             try {
-                checkoutResponse = post.getStatus(params[0], params[1], params[2]);
+                checkoutResponse = post.getStatus(params[0], params[1], params[2], params[3]);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "ioException - check your net connection";

@@ -38,10 +38,11 @@ public class Post {
         return response.body().string();
     }
 
-    public String getStatus(String url, String action, String resourcePath) throws IOException {
+    public String getStatus(String url, String action, String resourcePath, String type) throws IOException {
         RequestBody formBody = new FormBody.Builder()
                 .add("resourcePath", resourcePath)
                 .add("action", action)
+                .add("paymentType", type)
                 .build();
 
         Request request = new Request.Builder()
