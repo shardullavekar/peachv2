@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import com.oppwa.mobile.connect.BuildConfig;
 import com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity;
 import com.oppwa.mobile.connect.checkout.meta.CheckoutSettings;
+import com.oppwa.mobile.connect.checkout.meta.CheckoutStorePaymentDetailsMode;
 import com.oppwa.mobile.connect.exception.PaymentError;
 import com.oppwa.mobile.connect.exception.PaymentException;
 import com.oppwa.mobile.connect.provider.Connect;
@@ -38,7 +39,7 @@ public class PeachPay extends AppCompatActivity {
     private ServiceConnection serviceConnection;
 
     String server_url,
-            amount, currency, type, env, checkoutId;
+            amount, currency, type, env, checkoutId, savecard;
 
     ApplicationInfo app;
 
@@ -83,6 +84,8 @@ public class PeachPay extends AppCompatActivity {
 
         type = getIntent().getStringExtra("type");
 
+        savecard = getIntent().getStringExtra("savecard");
+
         env = getIntent().getStringExtra("env");
 
         server_url = bundle.getString(Config.SERVER_URL);
@@ -125,7 +128,7 @@ public class PeachPay extends AppCompatActivity {
 
     private void getCheckoutId() {
         Checkout checkout = new Checkout();
-        checkout.post(server_url, amount, currency, type, new Callback() {
+        Callback callback = new Callback() {
             @Override
             public void onResponse(String response) {
                 dismissDialogue();
@@ -143,9 +146,14 @@ public class PeachPay extends AppCompatActivity {
                     e.printStackTrace();
                     fireBroadcast(Config.FAILED, "Unable to fetch failure reason");
                 }
-
             }
-        });
+        };
+        String tokens = Config.getTokens(getApplicationContext());
+        String createReg = "false";
+        if (!TextUtils.isEmpty(tokens)) {
+            createReg = "true";
+        }
+        checkout.post(server_url, amount, currency, type, createReg, tokens, callback);
         showDialogue("Getting Checkout Id");
     }
 
@@ -158,6 +166,15 @@ public class PeachPay extends AppCompatActivity {
         paymentBrands.add("DIRECTDEBIT_SEPA");
 
         CheckoutSettings checkoutSettings = new CheckoutSettings(checkoutId, paymentBrands);
+        if (TextUtils.equals(savecard, Config.ALWAYS)) {
+            checkoutSettings.setStorePaymentDetailsMode(CheckoutStorePaymentDetailsMode.ALWAYS);
+        }
+        else if (TextUtils.equals(savecard, Config.PROMPT)) {
+            checkoutSettings.setStorePaymentDetailsMode(CheckoutStorePaymentDetailsMode.PROMPT);
+        }
+        else {
+            checkoutSettings.setStorePaymentDetailsMode(CheckoutStorePaymentDetailsMode.NEVER);
+        }
         checkoutSettings.setWebViewEnabledFor3DSecure(true);
 
         ComponentName componentName = new ComponentName(BuildConfig.APPLICATION_ID,

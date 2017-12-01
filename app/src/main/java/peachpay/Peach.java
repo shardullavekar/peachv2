@@ -13,7 +13,7 @@ import org.json.JSONObject;
  */
 
 public class Peach extends BroadcastReceiver {
-    String amount, currency, type, env;
+    String amount, currency, type, savecard, env;
 
     JSONObject payment;
     Activity activity;
@@ -30,8 +30,10 @@ public class Peach extends BroadcastReceiver {
             amount = payment.getString("amount");
             currency = payment.getString("currency");
             type = payment.getString("type");
+            savecard = payment.getString("savecard");
             env = payment.getString("env");
-            startActivity(amount, currency, type, env);
+
+            startActivity(amount, currency, type, savecard, env);
         } catch (JSONException e) {
             e.printStackTrace();
             listener.onFailure(Config.FAILED, "Incorrect Value passed for amount/currency/type");
@@ -39,12 +41,13 @@ public class Peach extends BroadcastReceiver {
 
     }
 
-    private void startActivity(String amount, String currency, String type, String env) {
+    private void startActivity(String amount, String currency, String type, String savecard, String env) {
         Intent intent = new Intent(activity, PeachPay.class);
         intent.putExtra("amount", amount);
         intent.putExtra("currency", currency);
         intent.putExtra("type", type);
         intent.putExtra("env", env);
+        intent.putExtra("savecard", savecard);
         activity.startActivity(intent);
     }
 

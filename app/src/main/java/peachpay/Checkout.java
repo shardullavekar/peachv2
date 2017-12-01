@@ -13,9 +13,9 @@ public class Checkout {
 
     }
 
-    public void post(String url, String amount, String currency, String type, Callback callback) {
+    public void post(String url, String amount, String currency, String type, String createReg, String tokens, Callback callback) {
         CheckoutAsynch checkoutAsynch = new CheckoutAsynch(callback);
-        checkoutAsynch.execute(new String[]{url, amount, currency, type});
+        checkoutAsynch.execute(new String[]{url, "checkout", createReg, tokens, amount, currency, type});
     }
 
     private class CheckoutAsynch extends AsyncTask<String, Void, String> {
@@ -28,7 +28,7 @@ public class Checkout {
             Post post = new Post();
             String checkoutResponse;
             try {
-                checkoutResponse = post.getId(params[0], params[1], params[2], params[3]);
+                checkoutResponse = post.getId(params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
             } catch (IOException e) {
                 e.printStackTrace();
                 return "ioException - check your net connection";

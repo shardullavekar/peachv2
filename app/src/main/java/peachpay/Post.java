@@ -19,14 +19,14 @@ public class Post {
 
     OkHttpClient client = new OkHttpClient();
 
-    public String getId(String url, String action, String regFlag, String token, String amount, String currency, String type) throws IOException {
+    public String getId(String url, String action, String regFlag, String tokens, String amount, String currency, String type) throws IOException {
         RequestBody formBody = new FormBody.Builder()
                 .add("amount", amount)
                 .add("currency", currency)
                 .add("paymentType", type)
                 .add("action", action)
                 .add("createRegistration", regFlag)
-                .add("registrations", token)
+                .add("registrations", tokens)
                 .build();
 
         Request request = new Request.Builder()
