@@ -29,6 +29,8 @@ import org.json.JSONObject;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import devsupport.ai.peachpayv2.R;
+
 
 public class PeachPay extends AppCompatActivity {
     private IProviderBinder binder;
@@ -163,7 +165,6 @@ public class PeachPay extends AppCompatActivity {
 
         Intent intent = new Intent(PeachPay.this, CheckoutActivity.class);
         intent.putExtra(CheckoutActivity.CHECKOUT_SETTINGS, checkoutSettings);
-        //intent.putExtra(CheckoutActivity.CHECKOUT_RECEIVER, componentName);
 
         startActivityForResult(intent, CheckoutActivity.CHECKOUT_ACTIVITY);
     }
