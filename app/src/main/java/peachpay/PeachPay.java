@@ -39,7 +39,7 @@ public class PeachPay extends AppCompatActivity {
     private ServiceConnection serviceConnection;
 
     String server_url,
-            amount, currency, type, env, checkoutId, savecard;
+            amount, currency, type, env, checkoutId, savecard, recurring = "";
 
     ApplicationInfo app;
 
@@ -87,6 +87,10 @@ public class PeachPay extends AppCompatActivity {
         savecard = getIntent().getStringExtra("savecard");
 
         env = getIntent().getStringExtra("env");
+
+        if (getIntent().hasExtra("recurring")) {
+            recurring = getIntent().getStringExtra("recurring");
+        }
 
         server_url = bundle.getString(Config.SERVER_URL);
 
@@ -149,11 +153,8 @@ public class PeachPay extends AppCompatActivity {
             }
         };
         String tokens = Config.getTokens(getApplicationContext());
-        String createReg = "false";
-        if (!TextUtils.isEmpty(tokens)) {
-            createReg = "true";
-        }
-        checkout.post(server_url, amount, currency, type, "true", tokens, callback);
+
+        checkout.post(server_url, amount, currency, type, recurring, tokens, callback);
         showDialogue("Getting Checkout Id");
     }
 
@@ -253,11 +254,9 @@ public class PeachPay extends AppCompatActivity {
                 String resourcePath = data.getStringExtra(CheckoutActivity.CHECKOUT_RESULT_RESOURCE_PATH);
 
                 if (transaction.getTransactionType() == TransactionType.SYNC) {
-                /* check the result of synchronous transaction */
                     getStatus(resourcePath);
-                //fireBroadcast(Config.SUCCESS, "checkoutId=" + checkoutId);
                 } else {
-                /* wait for the asynchronous transaction callback in the onNewIntent() */
+                    endActivity();
                 }
 
                 break;
@@ -301,6 +300,10 @@ public class PeachPay extends AppCompatActivity {
         intent.putExtra("code", code);
         intent.putExtra("response", message);
         sendBroadcast(intent);
+        PeachPay.this.finish();
+    }
+
+    private void endActivity() {
         PeachPay.this.finish();
     }
 }

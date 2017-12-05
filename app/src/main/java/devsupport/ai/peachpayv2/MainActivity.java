@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callPeachPayments("95.00", "EUR", "PA", Config.TEST);
+                callPeachPayments("95.00", "EUR", "DB", Config.TEST);
             }
         });
 
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             pay.put("currency", currency);
             pay.put("type", type);
             pay.put("savecard", Config.PROMPT);
+            pay.put("recurring", false);
             pay.put("env", env);
         } catch (JSONException e) {
             e.printStackTrace();

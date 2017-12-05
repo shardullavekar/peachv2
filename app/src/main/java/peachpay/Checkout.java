@@ -13,9 +13,9 @@ public class Checkout {
 
     }
 
-    public void post(String url, String amount, String currency, String type, String createReg, String tokens, Callback callback) {
+    public void post(String url, String amount, String currency, String type, String recurring, String tokens, Callback callback) {
         CheckoutAsynch checkoutAsynch = new CheckoutAsynch(callback);
-        checkoutAsynch.execute(new String[]{url, "checkout", createReg, tokens, amount, currency, type});
+        checkoutAsynch.execute(new String[]{url, "checkout", recurring, tokens, amount, currency, type});
     }
 
     private class CheckoutAsynch extends AsyncTask<String, Void, String> {
