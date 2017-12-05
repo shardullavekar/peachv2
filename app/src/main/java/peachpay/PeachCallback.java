@@ -1,4 +1,4 @@
-package devsupport.ai.peachpayv2;
+package peachpay;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,9 +11,7 @@ import android.text.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import peachpay.Callback;
-import peachpay.CheckStatus;
-import peachpay.Config;
+import devsupport.ai.peachpayv2.R;
 
 public class PeachCallback extends AppCompatActivity {
     private ProgressDialog dialog;

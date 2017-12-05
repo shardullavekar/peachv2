@@ -46,7 +46,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".PeachCallback"
+        <activity android:name="peachpay.PeachCallback"
                   android:launchMode="singleTask">
             <intent-filter>
                 <data android:scheme="devsupport"/>
