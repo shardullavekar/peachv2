@@ -136,7 +136,7 @@ public class PeachPay extends AppCompatActivity {
                 try {
                     jsonObject = new JSONObject(response);
                     JSONObject result = jsonObject.getJSONObject("result");
-                    if (TextUtils.equals(result.getString("code"), Config.PEACH_SUCCESS)) {
+                    if (TextUtils.equals(result.getString("code"), Config.PEACH_SUCCESS) || TextUtils.equals(result.getString("code"), Config.PEACH_SUCCESS_2)) {
                         configCheckout(jsonObject.getString("id"));
                     }
                     else {
@@ -153,7 +153,7 @@ public class PeachPay extends AppCompatActivity {
         if (!TextUtils.isEmpty(tokens)) {
             createReg = "true";
         }
-        checkout.post(server_url, amount, currency, type, createReg, tokens, callback);
+        checkout.post(server_url, amount, currency, type, "true", tokens, callback);
         showDialogue("Getting Checkout Id");
     }
 

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -18,11 +20,20 @@ public class MainActivity extends AppCompatActivity {
 
     Peach peachPay;
 
+    Button pay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        callPeachPayments("95.00", "EUR", "DB", Config.TEST);
+        pay = (Button) this.findViewById(R.id.pay_button);
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callPeachPayments("95.00", "EUR", "PA", Config.TEST);
+            }
+        });
+
     }
 
     private void callPeachPayments(String amount, String currency, String type, String env) {

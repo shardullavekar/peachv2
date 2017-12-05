@@ -21,6 +21,7 @@ public class Config {
     public final static String TEST = "test";
     public final static String PROD = "prod";
     public final static String PEACH_SUCCESS = "000.100.110";
+    public final static String PEACH_SUCCESS_2 = "000.200.100";
     public final static String ALWAYS = "always";
     public final static String NEVER = "never";
     public final static String PROMPT = "prompt";

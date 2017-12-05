@@ -17,6 +17,12 @@ public class CheckStatus {
         checkoutAsynch.execute(new String[]{url, "getPaymentStatus", resourcePath, type});
     }
 
+    public void postStatus(String url, String checkoutId, String type, Callback callback) {
+        CheckStatusAsynch checkStatusAsynch = new CheckStatusAsynch(callback);
+        checkStatusAsynch.execute(new String[]{url, "getPaymentStatus", "/v1/checkouts/" + checkoutId + "/payment", type});
+
+    }
+
     private class CheckStatusAsynch extends AsyncTask<String, Void, String> {
         Callback callback;
         public CheckStatusAsynch(Callback callback) {

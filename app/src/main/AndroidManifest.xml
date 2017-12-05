@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="devsupport.ai.peachpayv2">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -23,21 +23,20 @@
 
         <service
             android:name="com.oppwa.mobile.connect.service.ConnectService"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
-            tools:replace="android:theme"
             android:name="com.oppwa.mobile.connect.checkout.dialog.CheckoutActivity"
+            android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.Checkout.Light"
             android:windowSoftInputMode="adjustPan"
-            android:exported="false"
-            android:launchMode="singleTop"/>
+            tools:replace="android:theme" />
+        <activity android:name="peachpay.PeachPay" />
 
-        <activity android:name="peachpay.PeachPay"></activity>
-
-        <meta-data android:name="server.url.peachpay"
-            android:value="https://powerful-temple-10534.herokuapp.com/peachandroid/actionSelection.php"
-            />
+        <meta-data
+            android:name="server.url.peachpay"
+            android:value="https://morning-coast-29604.herokuapp.com/actionSelection.php" />
 
         <receiver
             android:name="peachpay.CheckoutBroadcastReceiver"
@@ -47,6 +46,15 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".PeachCallback"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <data android:scheme="devsupport"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
