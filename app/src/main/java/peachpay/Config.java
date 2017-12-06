@@ -26,6 +26,7 @@ public class Config {
     public final static String NEVER = "never";
     public final static String PROMPT = "prompt";
     public final static String TOKENS = "tokens";
+    public final static String PEACH_CALLBACK_TEMPLATE = "peachpay.callback.name";
 
     public static void saveTokens(Context context, String token) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(TOKENS, 0);

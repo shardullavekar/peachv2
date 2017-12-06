@@ -43,7 +43,9 @@ public class PeachCallback extends AppCompatActivity {
 
         String scheme = getIntent().getScheme();
 
-        if (TextUtils.equals(scheme, "devsupport")) {
+        String storedScheme = bundle.getString(Config.PEACH_CALLBACK_TEMPLATE);
+
+        if (TextUtils.equals(scheme, storedScheme)) {
             String checkoutId = getIntent().getData().getQueryParameter("id");
             CheckStatus checkStatus = new CheckStatus();
             Callback callback = new Callback() {

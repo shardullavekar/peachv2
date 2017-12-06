@@ -55,6 +55,9 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
+
+        <meta-data android:name="peachpay.callback.name" android:value="devsupport"/>
+
     </application>
 
 </manifest>
