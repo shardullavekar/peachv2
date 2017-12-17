@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             pay.put("currency", currency);
             pay.put("type", type);
             pay.put("savecard", Config.PROMPT);
-            pay.put("recurring", false);
             pay.put("env", env);
         } catch (JSONException e) {
             e.printStackTrace();

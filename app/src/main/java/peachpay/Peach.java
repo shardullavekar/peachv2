@@ -13,7 +13,7 @@ import org.json.JSONObject;
  */
 
 public class Peach extends BroadcastReceiver {
-    String amount, currency, type, savecard, env, recurring = "";
+    String amount, currency, type, savecard, env;
 
     JSONObject payment;
     Activity activity;
@@ -32,7 +32,6 @@ public class Peach extends BroadcastReceiver {
             type = payment.getString("type");
             savecard = payment.getString("savecard");
             env = payment.getString("env");
-            recurring = String.valueOf(payment.getString("recurring"));
             startActivity(amount, currency, type, savecard, env);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -48,8 +47,6 @@ public class Peach extends BroadcastReceiver {
         intent.putExtra("type", type);
         intent.putExtra("env", env);
         intent.putExtra("savecard", savecard);
-        intent.putExtra("recurring", recurring);
-
         activity.startActivity(intent);
     }
 
