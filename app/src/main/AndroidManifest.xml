@@ -36,7 +36,7 @@
 
         <meta-data
             android:name="server.url.peachpay"
-            android:value="https://morning-coast-29604.herokuapp.com/actionSelection.php" />
+            android:value="https://morning-coast-29604.herokuapp.com/action.php" />
 
         <receiver
             android:name="peachpay.CheckoutBroadcastReceiver"
